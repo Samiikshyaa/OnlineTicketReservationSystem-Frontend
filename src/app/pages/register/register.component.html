@@ -1,45 +1,43 @@
 <div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-      <h2 class="text-2xl font-semibold text-center mb-4">Register</h2>
-      <!-- [formGroup]="registerForm" (ngSubmit)="onSubmit()" -->
-      <form >
-        <!-- Username -->
-        <div class="mb-4">
-          <label class="block text-gray-700">Username</label>
-          <input type="text" formControlName="userName"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-            <!-- *ngIf="f['userName'].touched && f['userName'].invalid" -->
-          <div  class="text-red-500 text-sm">
-            Username is required and must be at least 3 characters long.
-          </div>
+  <div class="bg-white p-8 rounded-lg shadow-md w-96">
+    <h2 class="text-2xl font-semibold text-center mb-4">Register</h2>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="mb-4">
+        <label class="block text-gray-700">Username</label>
+        <input type="text" formControlName="userName"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+        <div *ngIf="f['userName'].touched && f['userName'].invalid" class="text-red-500 text-sm">
+          Username is required and must be at least 3 characters long.
         </div>
-  
-        <!-- Password -->
-        <div class="mb-4">
-          <label class="block text-gray-700">Password</label>
-          <input type="password" formControlName="password"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-            <!-- *ngIf="f['password'].touched && f['password'].invalid" -->
-          <div  class="text-red-500 text-sm">
-            Password is required and must be at least 6 characters long.
-          </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="block text-gray-700">Password</label>
+        <input type="password" formControlName="password"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+        <div *ngIf="f['password'].touched && f['password'].invalid" class="text-red-500 text-sm">
+          Password is required and must be at least 6 characters long.
         </div>
-  
-        <!-- RoleformControlName="role" -->
-        <div class="mb-4">
-          <label class="block text-gray-700">Role</label>
-          <select 
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-            <option value="admin">Admin</option>
-            <option value="passenger">Passenger</option>
-          </select>
-        </div>
-  
-        <!-- Submit Button [disabled]="registerForm.invalid" -->
-        <button type="submit" 
-          class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-          Register
-        </button>
-      </form>
-    </div>
+      </div>
+
+      <!-- Role -->
+      <div class="mb-4">
+        <label class="block text-gray-700">Role</label>
+        <select formControlName="role"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+          <option value="admin">Admin</option>
+          <option value="passenger">Passenger</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="registerForm.invalid"
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+        Register
+      </button>
+    </form>
   </div>
+</div>
