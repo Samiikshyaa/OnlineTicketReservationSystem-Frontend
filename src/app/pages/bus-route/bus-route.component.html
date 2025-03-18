@@ -1,1 +1,40 @@
-<p>bus-route works!</p>
+<div class="p-8">
+    <h2 class="text-2xl font-semibold text-center mb-4">Bus Routes</h2>
+
+    <div class="flex gap-4 mb-4">
+      <!-- Source Dropdown -->
+      <select [(ngModel)]="selectedSource" (change)="filterRoutes()" class="p-2 border rounded w-1/3">
+        <option value="">Select Source</option>
+        <option *ngFor="let route of uniqueSources" [value]="route">{{ route }}</option>
+      </select>
+
+      <!-- Destination Dropdown -->
+      <select [(ngModel)]="selectedDestination" (change)="filterRoutes()" class="p-2 border rounded w-1/3">
+        <option value="">Select Destination</option>
+        <option *ngFor="let route of uniqueDestinations" [value]="route">{{ route }}</option>
+      </select>
+    </div>
+
+    <!-- Bus List Header -->
+    <div class="bus-list-header flex justify-between items-center p-3 border-b bg-white">
+      <span class="text-lg font-semibold">Bus Number</span>
+      <span class="text-lg font-semibold">Capacity</span>
+      <span class="text-lg font-semibold">Distance</span>
+      <span class="text-lg font-semibold">Price</span>
+      <span class="text-lg font-semibold"></span>
+    </div>
+
+    <!-- Message when no buses are found -->
+    <p *ngIf="filteredBuses.length === 0">No buses found.</p>
+
+    <!-- Bus List -->
+    <div *ngFor="let bus of filteredBuses" class="flex justify-between items-center p-3 border-b">
+      <span class="text-lg font-semibold">{{ bus.busNumber }}</span>
+      <span class="text-lg font-semibold">{{ bus.capacity }}</span>
+      <span class="text-lg font-semibold">{{ bus.distance }}</span>
+      <span class="text-lg font-semibold">{{ bus.price }}</span>
+      <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">
+        View Seats
+      </button>
+    </div>
+  </div>

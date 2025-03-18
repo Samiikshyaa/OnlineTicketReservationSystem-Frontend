@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-seat-reservation',
   standalone: true,
+  imports: [CommonModule],
   template: `
   <div *ngIf="bus" class="modal">
     <h2>Seat Reservation for Bus: {{ bus?.busNumber }}</h2>
