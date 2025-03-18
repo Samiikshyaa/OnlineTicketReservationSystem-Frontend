@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SeatReservationComponent } from "../seat-reservation/seat-reservation.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bus-route',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, SeatReservationComponent],
+  // Note: We removed SeatReservationComponent from the imports because we are not embedding it here.
+  imports: [CommonModule, FormsModule, HttpClientModule],
   template: `
     <div class="p-8">
       <h2 class="text-2xl font-semibold text-center mb-4">Bus Routes</h2>
@@ -26,7 +27,7 @@ import { SeatReservationComponent } from "../seat-reservation/seat-reservation.c
         </select>
       </div>
 
-      <!-- Bus List -->
+      <!-- Bus List Header -->
       <div class="bus-list-header flex justify-between items-center p-3 border-b bg-white">
         <span class="text-lg font-semibold">Bus Number</span>
         <span class="text-lg font-semibold">Capacity</span>
@@ -34,18 +35,23 @@ import { SeatReservationComponent } from "../seat-reservation/seat-reservation.c
         <span class="text-lg font-semibold">Price</span>
         <span class="text-lg font-semibold"></span>
       </div>
+
+      <!-- Message when no buses are found -->
+      <p *ngIf="filteredBuses.length === 0">No buses found.</p>
+
+      <!-- Bus List -->
       <div *ngFor="let bus of filteredBuses" class="flex justify-between items-center p-3 border-b">
         <span class="text-lg font-semibold">{{ bus.busNumber }}</span>
         <span class="text-lg font-semibold">{{ bus.capacity }}</span>
-        <span class="text-lg font-semibold">{{ bus.distance}}</span>
-        <span class="text-lg font-semibold">{{ bus.price}}</span>
-        <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">View Seats</button>
+        <span class="text-lg font-semibold">{{ bus.distance }}</span>
+        <span class="text-lg font-semibold">{{ bus.price }}</span>
+        <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">
+          View Seats
+        </button>
       </div>
-
-      <!-- Seat Reservation Popup -->
-      <app-seat-reservation *ngIf="selectedBus" [bus]="selectedBus" (close)="selectedBus = null"></app-seat-reservation>
-    </div>`,
-    styles: [`
+    </div>
+  `,
+  styles: [`
     .bus-list-header {
       position: sticky;
       top: 0;
@@ -56,10 +62,9 @@ import { SeatReservationComponent } from "../seat-reservation/seat-reservation.c
 })
 export class BusRouteComponent {
   private http = inject(HttpClient);
+  private router = inject(Router);
 
-  routes: any[] = [];
   filteredBuses: any[] = [];
-  selectedBus: any | null = null;
   selectedSource: string = '';
   selectedDestination: string = '';
 
@@ -71,45 +76,33 @@ export class BusRouteComponent {
   }
 
   fetchRoutes() {
-    const token = localStorage.getItem('token'); // Get JWT token
+    const token = localStorage.getItem('token');
     if (!token) {
       console.error('No auth token found!');
       return;
     }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     this.http.get<{ data: string[] }>('http://localhost:8080/api/routes/sources', { headers })
       .subscribe(response => {
         this.uniqueSources = response.data;
       });
   }
 
-  /** 🔹 Method to filter routes based on selected source and destination */
   filterRoutes() {
     if (!this.selectedSource) {
       this.uniqueDestinations = [];
       this.filteredBuses = [];
       return;
     }
-
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-
-    // Fetch destinations based on selected source
+    // Fetch destinations for the selected source
     this.http.get<{ data: string[] }>(`http://localhost:8080/api/routes/destinations?source=${this.selectedSource}`, { headers })
       .subscribe(response => {
         this.uniqueDestinations = response.data;
       });
-
-    
-    // Fetch bus details when both source & destination are selected
+    // Fetch bus details when both source and destination are selected
     if (this.selectedDestination) {
-      const token = localStorage.getItem('token'); 
-      const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
       this.http.get<{ data: any[] }>(
         `http://localhost:8080/api/routes/bus-route-details?source=${this.selectedSource}&destination=${this.selectedDestination}`,
         { headers }
@@ -119,8 +112,12 @@ export class BusRouteComponent {
     }
   }
 
-  /** 🔹 Method to select a bus */
   selectBus(bus: any) {
-    this.selectedBus = bus;
+    if (!bus || !bus.id) {
+      console.error('Bus ID is missing or invalid', bus);
+      return;
+    }
+    this.router.navigate(['/seat-reserve', bus.id]); 
   }
+  
 }
