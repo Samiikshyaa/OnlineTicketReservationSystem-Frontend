@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
@@ -12,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 export class NavbarComponent implements OnInit {
   role: string | null = null;
 
-  constructor(private router: Router) {}
+  private router = inject(Router)
 
   ngOnInit(): void {
     this.getUserRole();
