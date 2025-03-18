@@ -1,1 +1,23 @@
-<p>seat-reservation works!</p>
+<div class="bus-container">
+    <div class="seat-layout">
+      <div *ngFor="let seat of seats; let i = index" class="seat-row">
+        <button 
+          class="seat" 
+          [ngClass]="{
+            'reserved': seat.seatStatus === 'RESERVED',
+            'selected': selectedSeats.includes(seat.id)
+          }" 
+          (click)="toggleSeatSelection(seat)">
+          {{ seat.seatNumber }}
+        </button>
+        <!-- Add space for aisle -->
+        <div *ngIf="(i + 1) % 4 === 2" class="aisle-space"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Reserve Button -->
+  <button class="reserve-btn" (click)="reserveSeats()">Reserve</button>
+
+  
+  
