@@ -27,15 +27,32 @@ import { SeatReservationComponent } from "../seat-reservation/seat-reservation.c
       </div>
 
       <!-- Bus List -->
+      <div class="bus-list-header flex justify-between items-center p-3 border-b bg-white">
+        <span class="text-lg font-semibold">Bus Number</span>
+        <span class="text-lg font-semibold">Capacity</span>
+        <span class="text-lg font-semibold">Distance</span>
+        <span class="text-lg font-semibold">Price</span>
+        <span class="text-lg font-semibold"></span>
+      </div>
       <div *ngFor="let bus of filteredBuses" class="flex justify-between items-center p-3 border-b">
         <span class="text-lg font-semibold">{{ bus.busNumber }}</span>
+        <span class="text-lg font-semibold">{{ bus.capacity }}</span>
+        <span class="text-lg font-semibold">{{ bus.distance}}</span>
+        <span class="text-lg font-semibold">{{ bus.price}}</span>
         <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">View Seats</button>
       </div>
 
       <!-- Seat Reservation Popup -->
       <app-seat-reservation *ngIf="selectedBus" [bus]="selectedBus" (close)="selectedBus = null"></app-seat-reservation>
-    </div>
-  `
+    </div>`,
+    styles: [`
+    .bus-list-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: white;
+    }
+  `]
 })
 export class BusRouteComponent {
   private http = inject(HttpClient);
@@ -54,7 +71,7 @@ export class BusRouteComponent {
   }
 
   fetchRoutes() {
-    const token = localStorage.getItem('authToken'); // Get JWT token
+    const token = localStorage.getItem('token'); // Get JWT token
     if (!token) {
       console.error('No auth token found!');
       return;
@@ -64,8 +81,8 @@ export class BusRouteComponent {
       'Authorization': `Bearer ${token}`
     });
 
-    // ✅ Fetch sources
-    this.http.get<{ data: string[] }>('http://localhost:8080/api/sources', { headers })
+
+    this.http.get<{ data: string[] }>('http://localhost:8080/api/routes/sources', { headers })
       .subscribe(response => {
         this.uniqueSources = response.data;
       });
@@ -79,19 +96,22 @@ export class BusRouteComponent {
       return;
     }
 
-    const token = localStorage.getItem('authToken'); 
+    const token = localStorage.getItem('token'); 
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    // ✅ Fetch destinations based on selected source
-    this.http.get<{ data: string[] }>(`http://localhost:8080/api/destinations?source=${this.selectedSource}`, { headers })
+    // Fetch destinations based on selected source
+    this.http.get<{ data: string[] }>(`http://localhost:8080/api/routes/destinations?source=${this.selectedSource}`, { headers })
       .subscribe(response => {
         this.uniqueDestinations = response.data;
       });
 
-    // ✅ Fetch bus details when both source & destination are selected
+    
+    // Fetch bus details when both source & destination are selected
     if (this.selectedDestination) {
+      const token = localStorage.getItem('token'); 
+      const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
       this.http.get<{ data: any[] }>(
-        `http://localhost:8080/api/bus-route-details?source=${this.selectedSource}&destination=${this.selectedDestination}`,
+        `http://localhost:8080/api/routes/bus-route-details?source=${this.selectedSource}&destination=${this.selectedDestination}`,
         { headers }
       ).subscribe(response => {
         this.filteredBuses = response.data;

@@ -36,15 +36,18 @@ export class LoginComponent {
         const decodedToken: any = jwtDecode(token);
         
         // Extract the role and store it in localStorage
-        const userRole = decodedToken.role;  // Assuming role is part of the token
+        const userRole: string = decodedToken.role;  // Assuming role is part of the token
         localStorage.setItem('role', userRole); 
         localStorage.setItem('token', token);
-        // alert('Login successful');
-        if(userRole == "ROLE_ADMIN"){
+        alert('Login successful');
+              
         this.router.navigate(['/dashboard']);
-        }else{
-          this.router.navigate(['/bus-route'])
-        }
+        // if(true){
+        //   console.log(userRole == "ROLE_ADMIN")
+          
+        // }else{
+        //   this.router.navigate(['/bus-route']);
+        // }
       },
       error: () => {
         alert('Incorrect username or password');

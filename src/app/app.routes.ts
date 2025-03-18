@@ -16,12 +16,13 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [authGuardGuard]
+        component: DashboardComponent
+        ,canActivate: [authGuardGuard]
     },
     {
         path: 'bus-route',
-        component: BusRouteComponent
+        component: BusRouteComponent,
+        canActivate: [authGuardGuard]
     },
     {
         path: '',
