@@ -1,0 +1,11 @@
+<nav>
+    <ul>
+      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/dashboard">Dashboard</a></li>
+      <li *ngIf="role === 'ROLE_PASSENGER'"><a routerLink="/bus-route">Home</a></li>
+      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/route">Route</a></li>
+      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/bus">Bus</a></li>
+      <li *ngIf="role === 'PASSENGER'"><a routerLink="/routes">Routes</a></li>
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </nav>
+  

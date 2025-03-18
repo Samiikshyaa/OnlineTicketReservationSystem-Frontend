@@ -40,14 +40,15 @@ export class LoginComponent {
         localStorage.setItem('role', userRole); 
         localStorage.setItem('token', token);
         alert('Login successful');
-              
-        this.router.navigate(['/dashboard']);
-        // if(true){
-        //   console.log(userRole == "ROLE_ADMIN")
-          
-        // }else{
-        //   this.router.navigate(['/bus-route']);
-        // }
+
+        setTimeout(() => {
+          if (userRole === "ROLE_ADMIN") {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/bus-route']);
+          }
+        }, 100);
+
       },
       error: () => {
         alert('Incorrect username or password');
