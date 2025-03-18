@@ -33,8 +33,6 @@
       <span class="text-lg font-semibold">{{ bus.capacity }}</span>
       <span class="text-lg font-semibold">{{ bus.distance }}</span>
       <span class="text-lg font-semibold">{{ bus.price }}</span>
-      <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">
-        View Seats
-      </button>
+      <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded"><a [routerLink]="['/seat-reserve', bus.busId]">View Seats</a></button>
     </div>
   </div>

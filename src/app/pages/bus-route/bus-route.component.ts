@@ -2,13 +2,12 @@ import { Component, inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-bus-route',
   standalone: true,
-  // Note: We removed SeatReservationComponent from the imports because we are not embedding it here.
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterLink],
   templateUrl: './bus-route.component.html',
   styleUrl:'./bus-route.component.css'
 })
@@ -60,11 +59,13 @@ export class BusRouteComponent {
         { headers }
       ).subscribe(response => {
         this.filteredBuses = response.data;
+        console.log(this.filteredBuses)
       });
     }
   }
 
   selectBus(bus: any) {
+    console.log(bus)
     if (!bus || !bus.id) {
       console.error('Bus ID is missing or invalid', bus);
       return;
