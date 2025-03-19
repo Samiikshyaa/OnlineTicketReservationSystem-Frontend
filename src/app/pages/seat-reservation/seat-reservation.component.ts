@@ -14,13 +14,13 @@ export class SeatReservationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient);
 
-  busId: string = '';  // ✅ Ensure it is always a string
+  busId: string = '';  
   seats: any[] = [];
-  selectedSeats: number[] = []; // ✅ Track selected seats
+  selectedSeats: number[] = []; 
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.busId = params.get('busId') || ''; // ✅ Ensure non-null
+      this.busId = params.get('busId') || ''; // Ensure non-null
       if (this.busId) {
         this.fetchBusDetails(this.busId);
       } else {
