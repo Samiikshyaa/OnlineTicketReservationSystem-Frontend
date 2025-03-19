@@ -1,11 +1,25 @@
-<nav>
-    <ul>
-      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/dashboard">Dashboard</a></li>
-      <li *ngIf="role === 'ROLE_PASSENGER'"><a routerLink="/bus-route">Home</a></li>
-      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/route">Route</a></li>
-      <li *ngIf="role === 'ROLE_ADMIN'"><a routerLink="/bus">Bus</a></li>
-      <li *ngIf="role === 'PASSENGER'"><a routerLink="/routes">Routes</a></li>
-      <li><a (click)="logout()">Logout</a></li>
+<nav class="bg-blue-600 p-4 shadow-lg">
+  <div class="container mx-auto flex justify-between items-center">
+    <ul class="flex space-x-6 text-white font-semibold">
+      <li *ngIf="role === 'ROLE_ADMIN'">
+        <a routerLink="/dashboard" class="hover:text-gray-200 transition">Dashboard</a>
+      </li>
+      <li *ngIf="role === 'ROLE_PASSENGER'">
+        <a routerLink="/bus-route" class="hover:text-gray-200 transition">Home</a>
+      </li>
+      <li *ngIf="role === 'ROLE_ADMIN'">
+        <a routerLink="/route" class="hover:text-gray-200 transition">Route</a>
+      </li>
+      <li *ngIf="role === 'ROLE_ADMIN'">
+        <a routerLink="/bus" class="hover:text-gray-200 transition">Bus</a>
+      </li>
+      <li *ngIf="role === 'PASSENGER'">
+        <a routerLink="/routes" class="hover:text-gray-200 transition">Routes</a>
+      </li>
     </ul>
-  </nav>
-  
+
+    <button (click)="logout()" class="bg-red-500 px-4 py-2 rounded-lg text-white hover:bg-red-600 transition">
+      Logout
+    </button>
+  </div>
+</nav>

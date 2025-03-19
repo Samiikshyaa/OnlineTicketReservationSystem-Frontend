@@ -1,43 +1,67 @@
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-      <h2 class="text-2xl font-semibold text-center mb-4">Bus</h2>
-      
-      <form [formGroup]="busForm" (ngSubmit)="onSubmit()">
-        <!-- Username -->
-        <div>
-          <label>Bus Number</label>
-          <input type="text" formControlName="userName">
-          <div *ngIf="f['userName'].touched && f['userName'].invalid">
-            Username is required and must be at least 3 characters long.
-          </div>
-        </div>
-
-        <div>
-            <label>Capacity</label>
-            <input type="text" formControlName="userName">
-            <div *ngIf="f['userName'].touched && f['userName'].invalid">
-              Username is required and must be at least 3 characters long.
-            </div>
-          </div>
-
-          
-
-  
-        <!-- Role -->
-        <!-- <div class="mb-4">
-          <label class="block text-gray-700">Role</label>
-          <select formControlName="role"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-            <option value="admin">Admin</option>
-            <option value="passenger">Passenger</option>
-          </select>
-        </div> -->
-  
-        <!-- Submit Button -->
-        <button type="submit" [disabled]="busForm.invalid"
-          class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-          Register
-        </button>
-      </form>
+<div class="container mx-auto p-4">
+  <!-- Route Selection -->
+  <h3 class="text-lg font-semibold mb-2">Select a Route</h3>
+  <div class="grid grid-cols-2 gap-2">
+    <div *ngFor="let route of routes"
+         class="p-2 border cursor-pointer hover:bg-gray-200"
+         (click)="busForm.patchValue({routeId: route.id})">
+      {{ route.source }} → {{ route.destination }} ({{ route.departureTime }})
     </div>
   </div>
+
+  <!-- Bus Form -->
+  <div class="mt-6 p-4 border rounded shadow-lg">
+    <h3 class="text-lg font-semibold mb-4">Add / Update Bus</h3>
+    <form [formGroup]="busForm" (ngSubmit)="onSubmit()">
+      <div class="mb-2">
+        <label>Bus Number</label>
+        <input type="text" formControlName="busNumber" class="border p-2 w-full" required>
+        <div *ngIf="f['busNumber'].touched && f['busNumber'].invalid">
+          Bus number is required (min 3 characters).
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label>Capacity</label>
+        <input type="number" formControlName="capacity" class="border p-2 w-full" required>
+        <div *ngIf="f['capacity'].touched && f['capacity'].invalid">
+          Capacity must be at least 1.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label>Route</label>
+        <select formControlName="routeId" class="border p-2 w-full" required>
+          <option *ngFor="let route of routes" [value]="route.id">
+            {{ route.source }} → {{ route.destination }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="busForm.invalid"
+              class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ busForm.value.id ? 'Update Bus' : 'Add Bus' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Bus List -->
+  <h3 class="text-lg font-semibold mt-6">Bus List</h3>
+  <table class="border-collapse border w-full mt-2">
+    <tr class="bg-gray-300">
+      <th class="border px-2 py-1">Bus Number</th>
+      <th class="border px-2 py-1">Capacity</th>
+      <th class="border px-2 py-1">Route</th>
+      <th class="border px-2 py-1">Actions</th>
+    </tr>
+    <tr *ngFor="let bus of buses">
+      <td class="border px-2 py-1">{{ bus.busNumber }}</td>
+      <td class="border px-2 py-1">{{ bus.capacity }}</td>
+      <td class="border px-2 py-1">{{ bus.routeId }}</td>
+      <td class="border px-2 py-1">
+        <button class="bg-yellow-500 text-white px-2 py-1 rounded" (click)="editBus(bus)">Edit</button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded" (click)="deleteBus(bus.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>

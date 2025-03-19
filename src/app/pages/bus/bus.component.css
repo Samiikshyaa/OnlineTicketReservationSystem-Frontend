@@ -1,0 +1,52 @@
+.container {
+    max-width: 800px;
+  }
+  
+  .border {
+    border: 1px solid #ccc;
+  }
+  
+  .p-2 {
+    padding: 0.5rem;
+  }
+  
+  .p-4 {
+    padding: 1rem;
+  }
+  
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
+  .bg-blue-500 {
+    background-color: #3490dc;
+  }
+  
+  .bg-yellow-500 {
+    background-color: #fbbf24;
+  }
+  
+  .bg-red-500 {
+    background-color: #e3342f;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .rounded {
+    border-radius: 4px;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  

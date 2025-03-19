@@ -1,1 +1,69 @@
-<p>route works!</p>
+<div class="container mx-auto p-4">
+    <!-- Route Form -->
+    <div class="mt-6 p-4 border rounded shadow-lg">
+      <h3 class="text-lg font-semibold mb-4">Add / Update Route</h3>
+      <form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+        <div class="mb-2">
+          <label>Source</label>
+          <input type="text" formControlName="source" class="border p-2 w-full" required>
+        </div>
+  
+        <div class="mb-2">
+          <label>Destination</label>
+          <input type="text" formControlName="destination" class="border p-2 w-full" required>
+        </div>
+  
+        <div class="mb-2">
+          <label>Departure Date</label>
+          <input type="date" formControlName="departureDate" class="border p-2 w-full" required>
+        </div>
+  
+        <div class="mb-2">
+          <label>Departure Time</label>
+          <input type="time" formControlName="departureTime" class="border p-2 w-full" required>
+        </div>
+  
+        <div class="mb-2">
+          <label>Price</label>
+          <input type="number" formControlName="price" class="border p-2 w-full" required>
+        </div>
+  
+        <div class="mb-2">
+          <label>Distance</label>
+          <input type="number" formControlName="distance" class="border p-2 w-full" required>
+        </div>
+  
+        <button type="submit" [disabled]="routeForm.invalid"
+                class="bg-blue-500 text-white px-4 py-2 rounded">
+          {{ routeForm.value.id ? 'Update Route' : 'Add Route' }}
+        </button>
+      </form>
+    </div>
+  
+    <!-- Route List -->
+    <h3 class="text-lg font-semibold mt-6">Route List</h3>
+    <table class="border-collapse border w-full mt-2">
+      <tr class="bg-gray-300">
+        <th class="border px-2 py-1">Source</th>
+        <th class="border px-2 py-1">Destination</th>
+        <th class="border px-2 py-1">Departure Date</th>
+        <th class="border px-2 py-1">Departure Time</th>
+        <th class="border px-2 py-1">Price</th>
+        <th class="border px-2 py-1">Distance</th>
+        <th class="border px-2 py-1">Actions</th>
+      </tr>
+      <tr *ngFor="let route of routes">
+        <td class="border px-2 py-1">{{ route.source }}</td>
+        <td class="border px-2 py-1">{{ route.destination }}</td>
+        <td class="border px-2 py-1">{{ route.departureDate }}</td>
+        <td class="border px-2 py-1">{{ route.departureTime }}</td>
+        <td class="border px-2 py-1">{{ route.price }}</td>
+        <td class="border px-2 py-1">{{ route.distance }}</td>
+        <td class="border px-2 py-1">
+          <button class="bg-yellow-500 text-white px-2 py-1 rounded" (click)="editRoute(route)">Edit</button>
+          <button class="bg-red-500 text-white px-2 py-1 rounded" (click)="deleteRoute(route.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
