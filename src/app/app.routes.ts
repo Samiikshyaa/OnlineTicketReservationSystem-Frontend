@@ -7,6 +7,8 @@ import { BusRouteComponent } from './pages/bus-route/bus-route.component';
 import { BusComponent } from './pages/bus/bus.component';
 import { RouteComponent } from './pages/route/route.component';
 import { SeatReservationComponent } from './pages/seat-reservation/seat-reservation.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { TicketComponent } from './pages/ticket/ticket.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -18,5 +20,7 @@ export const routes: Routes = [
   { path: 'route', component: RouteComponent, canActivate: [authGuardGuard] },
   // Seat reservation route expecting a busId parameter
   { path: 'seat-reserve/:busId', component: SeatReservationComponent, canActivate: [authGuardGuard] },
+  {path:'payment/:id', component:PaymentComponent, canActivate:[authGuardGuard]},
+  {path:'ticket/:paymentId', component:TicketComponent, canActivate:[authGuardGuard]},
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

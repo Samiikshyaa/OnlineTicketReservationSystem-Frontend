@@ -1,23 +1,69 @@
-<div class="bus-container">
-    <div class="seat-layout">
-      <div *ngFor="let seat of seats; let i = index" class="seat-row">
-        <button 
-          class="seat" 
-          [ngClass]="{
-            'reserved': seat.seatStatus === 'RESERVED',
-            'selected': selectedSeats.includes(seat.id)
-          }" 
-          (click)="toggleSeatSelection(seat)">
-          {{ seat.seatNumber }}
-        </button>
-        <!-- Add space for aisle -->
-        <div *ngIf="(i + 1) % 4 === 2" class="aisle-space"></div>
-      </div>
+<div class="flex flex-col items-center py-6 bg-gray-100 min-h-screen">
+
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-fit">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Bus Seat Reservation</h2>
+
+  <div class="flex space-x-6 mb-4 justify-center">
+    <div class="flex items-center">
+      <div class="w-6 h-6 bg-gray-200 rounded-lg"></div>
+      <span class="ml-2 text-gray-800">Available</span>
+    </div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 bg-green-500 rounded-lg"></div>
+      <span class="ml-2 text-gray-800">Selected</span>
+    </div>
+    <div class="flex items-center">
+      <div class="w-6 h-6 bg-red-500 rounded-lg"></div>
+      <span class="ml-2 text-gray-800">Reserved</span>
     </div>
   </div>
-  
-  <!-- Reserve Button -->
-  <button class="reserve-btn" (click)="reserveSeats()">Reserve</button>
+  <!-- Bus Layout -->
+  <div class="grid gap-4 p-4 bg-white shadow-md rounded-lg">
+<div *ngFor="let row of chunkedSeats; let rowIndex = index" class="flex gap-6">
+  <!-- Left Side Seats -->
+  <div class="grid grid-cols-2 gap-4">
+    <button 
+      *ngFor="let seat of row.leftSide" 
+      class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
+      [ngClass]="{
+        'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
+        'bg-green-500 text-white': selectedSeats.includes(seat.id),
+        'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
+      }"
+      (click)="toggleSeatSelection(seat)">
+      {{ seat.seatNumber }}
+    </button>
+  </div>
 
-  
-  
+  <!-- Aisle Space (except last row) -->
+  <div *ngIf="rowIndex !== chunkedSeats.length - 1" class="w-10"></div>
+
+  <!-- Right Side Seats -->
+  <div class="grid grid-cols-2 gap-4">
+    <button 
+      *ngFor="let seat of row.rightSide" 
+      class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
+      [ngClass]="{
+        'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
+        'bg-green-500 text-white': selectedSeats.includes(seat.id),
+        'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
+      }"
+      (click)="toggleSeatSelection(seat)">
+      {{ seat.seatNumber }}
+    </button>
+  </div>
+</div>
+
+
+  <!-- Reserve Button -->
+  <button class="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold text-lg rounded-lg shadow-md hover:bg-blue-600 transition-all"
+    (click)="reserveSeats()">
+    Reserve Seats
+  </button>
+</div>
+
+<button 
+  class="mt-4 px-6 py-3 text-white bg-green-600 hover:bg-green-700 font-semibold rounded-lg transition-all duration-300"
+  (click)="navigateToPayment()">
+  Pay Now
+</button>
