@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
-  imports:[ReactiveFormsModule, CommonModule, RouterLink],
+  imports:[ReactiveFormsModule, CommonModule],
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
