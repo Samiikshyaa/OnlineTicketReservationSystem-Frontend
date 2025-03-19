@@ -18,6 +18,8 @@ export class BusRouteComponent {
   filteredBuses: any[] = [];
   selectedSource: string = '';
   selectedDestination: string = '';
+  selectedDate: string = '';
+  selectedTime: string = ''; 
 
   uniqueSources: string[] = [];
   uniqueDestinations: string[] = [];
@@ -53,13 +55,13 @@ export class BusRouteComponent {
         this.uniqueDestinations = response.data;
       });
     // Fetch bus details when both source and destination are selected
-    if (this.selectedDestination) {
+    if (this.selectedDestination && this.selectedDate && this.selectedTime) {
       this.http.get<{ data: any[] }>(
-        `http://localhost:8080/api/routes/bus-route-details?source=${this.selectedSource}&destination=${this.selectedDestination}`,
+        `http://localhost:8080/api/routes/bus-route-details?source=${this.selectedSource}&destination=${this.selectedDestination}&date=${this.selectedDate}&time=${this.selectedTime}`,
         { headers }
       ).subscribe(response => {
         this.filteredBuses = response.data;
-        console.log(this.filteredBuses)
+        console.log(this.filteredBuses);
       });
     }
   }
