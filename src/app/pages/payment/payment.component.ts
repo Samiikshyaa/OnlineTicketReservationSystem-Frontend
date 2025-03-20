@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  reservationId: number = 0;
+  reservationId: string = '';
   ticket: any = null; // Will hold the ticket data
   paymentForm: FormGroup; // Reactive form group
   paymentId: number= 0;
@@ -31,7 +31,7 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.reservationId = Number(params.get('id'));
+      this.reservationId = params.get('reservationId') || '';
       if (this.reservationId) {
         this.fetchTicketDetails(this.reservationId);
       } else {
@@ -40,7 +40,7 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  fetchTicketDetails(reservationId: number) {
+  fetchTicketDetails(reservationId: string) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
@@ -71,17 +71,20 @@ export class PaymentComponent implements OnInit {
     const paymentRequest = {
       transactionId: this.paymentForm.value.transactionId,
       paymentMethod: this.paymentForm.value.paymentMethod,
-      reservationId: this.reservationId
+      reservationId: Number(this.reservationId)
     };
   
     this.http.post<{ status: boolean, message: string, data: any }>(
       'http://localhost:8080/api/payment/save', paymentRequest, { headers }
     ).subscribe(
       (response) => {
-        if (response.status) {
-          alert('Payment successful!');
-          this.paymentId = response.data.paymentId; // Assume paymentId is returned in response
-          this.onClick(); // Navigate to ticket page with paymentId
+        debugger;
+        console.log("Payment Successful:", response)
+        alert("Payment Successful")
+        if(response.data && response.data.paymentId){
+            this.paymentId = response.data.paymentId;
+            console.log("PaymentId:", this.paymentId);
+        // Navigate to ticket page with paymentId
         } else {
           alert('Payment failed. Please try again.');
         }
@@ -93,7 +96,11 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  onClick(){
+  getTicket(){
+    if(this.paymentId === 0){
+      alert("An error occured")
+    }
+    console.log(this.paymentId)
     this.router.navigate(['/ticket', this.paymentId])
   }
 }

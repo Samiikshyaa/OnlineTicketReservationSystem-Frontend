@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./ticket.component.css']
 })
 export class TicketComponent implements OnInit {
-  paymentId: number = 0;
+  paymentId: string = '';
   ticket: any = null;
 
   constructor(
@@ -20,7 +20,7 @@ export class TicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.paymentId = Number(params.get('paymentId')); // Retrieve paymentId from the URL
+      this.paymentId = params.get('paymentId') || '';
       if (this.paymentId) {
         this.fetchTicketDetails(this.paymentId);
       } else {
@@ -29,7 +29,7 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  fetchTicketDetails(paymentId: number) {
+  fetchTicketDetails(paymentId: string) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
