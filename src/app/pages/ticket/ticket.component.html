@@ -7,12 +7,12 @@
         <p><strong>Payment Id:</strong> {{ ticket.paymentId }}</p>
         <p><strong>Payment Method:</strong> {{ ticket.paymentMethod }}</p>
         <p><strong>Paid Amount:</strong> Rs. {{ ticket.totalAmount }}</p>
-        <p><strong>Paid Date:</strong> Rs. {{ ticket.paymentDateAndTime }}</p>
-        <p><strong>Paid By:</strong> Rs. {{ ticket.userName }}</p>
+        <p><strong>Paid At:</strong> {{ ticket.paymentDateAndTime | date: 'yyyy-MM-dd  hh:MM a' }}</p>
+        <p><strong>Paid By:</strong> {{ ticket.userName }}</p>
         <p><strong>Transaction Id:</strong> {{ticket.transactionId}}</p>
         <p><strong>Reservation Id:</strong> {{ ticket.reservationId }}</p>
         <p><strong>Departure Date:</strong> {{ ticket.departureDate | date:'yyyy-MM-dd'}}</p>
-        <p><strong>Departure Time:</strong> {{ ticket.departureTime | date: 'hh:mm:ss a' }}</p>
+        <p><strong>Departure Time:</strong> {{ ticket.departureTime}}</p>
         <p><strong>From: </strong> {{ ticket.from }}</p>
         <p><strong>To:</strong> {{ ticket.to }}</p>
         <p><strong>Seats:</strong> {{ ticket.seatNumbers }}</p>
@@ -20,8 +20,8 @@
     </div>
   
     <!-- Payment Confirmation Section -->
-    <div class="text-center mt-8">
+    <!-- <div class="text-center mt-8">
       <p class="text-lg text-green-600 font-semibold">Payment Status: Successful</p>
-    </div>
+    </div> -->
   </div>
   
