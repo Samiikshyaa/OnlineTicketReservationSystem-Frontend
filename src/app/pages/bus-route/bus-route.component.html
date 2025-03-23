@@ -1,45 +1,45 @@
-<div class="p-8">
-  <h2 class="text-2xl font-semibold text-center mb-4">Bus Routes</h2>
+<div class="p-8 bg-gray-100 min-h-screen">
+  <h2 class="text-3xl font-bold text-center mb-6 text-blue-600">Find Your Bus Routes</h2>
 
-  <div class="flex gap-4 mb-4">
+  <div class="flex gap-6 mb-6 justify-center">
     <!-- Source Dropdown -->
-    <select [(ngModel)]="selectedSource" (change)="filterRoutes()" class="p-2 border rounded w-1/5">
+    <select [(ngModel)]="selectedSource" (change)="filterRoutes()" class="p-3 border rounded-lg shadow-md w-1/4 focus:ring-2 focus:ring-blue-500 transition ease-in-out">
       <option value="">Select Source</option>
       <option *ngFor="let route of uniqueSources" [value]="route">{{ route }}</option>
     </select>
 
     <!-- Destination Dropdown -->
-    <select [(ngModel)]="selectedDestination" (change)="filterRoutes()" class="p-2 border rounded w-1/5">
+    <select [(ngModel)]="selectedDestination" (change)="filterRoutes()" class="p-3 border rounded-lg shadow-md w-1/4 focus:ring-2 focus:ring-blue-500 transition ease-in-out">
       <option value="">Select Destination</option>
       <option *ngFor="let route of uniqueDestinations" [value]="route">{{ route }}</option>
     </select>
 
     <!-- Date Picker -->
-    <input type="date" [(ngModel)]="selectedDate" (change)="filterRoutes()" class="p-2 border rounded w-1/5" />
+    <input type="date" [(ngModel)]="selectedDate" (change)="filterRoutes()" class="p-3 border rounded-lg shadow-md w-1/4 focus:ring-2 focus:ring-blue-500 transition ease-in-out" />
 
     <!-- Time Picker -->
-    <input type="time" [(ngModel)]="selectedTime" (change)="filterRoutes()" class="p-2 border rounded w-1/5" />
+    <input type="time" [(ngModel)]="selectedTime" (change)="filterRoutes()" class="p-3 border rounded-lg shadow-md w-1/4 focus:ring-2 focus:ring-blue-500 transition ease-in-out" />
   </div>
 
   <!-- Bus List Header -->
-  <div class="bus-list-header flex justify-between items-center p-3 border-b bg-white">
-    <span class="text-lg font-semibold">Bus Number</span>
-    <span class="text-lg font-semibold">Capacity</span>
-    <span class="text-lg font-semibold">Distance</span>
-    <span class="text-lg font-semibold">Price</span>
-    <span class="text-lg font-semibold"></span>
+  <div class="bus-list-header flex justify-between items-center p-4 border-b bg-white shadow-lg rounded-lg mb-4">
+    <span class="text-xl font-semibold text-gray-800">Bus Number</span>
+    <span class="text-xl font-semibold text-gray-800">Capacity</span>
+    <span class="text-xl font-semibold text-gray-800">Distance</span>
+    <span class="text-xl font-semibold text-gray-800">Price</span>
+    <span class="text-xl font-semibold text-gray-800"></span>
   </div>
 
   <!-- Message when no buses are found -->
-  <p *ngIf="filteredBuses.length === 0">No buses found.</p>
+  <p *ngIf="filteredBuses.length === 0" class="text-center text-xl text-gray-600 mt-4">No buses found.</p>
 
   <!-- Bus List -->
-  <div *ngFor="let bus of filteredBuses" class="flex justify-between items-center p-3 border-b">
-    <span class="text-lg font-semibold">{{ bus.busNumber }}</span>
-    <span class="text-lg font-semibold">{{ bus.capacity }}</span>
-    <span class="text-lg font-semibold">{{ bus.distance }}</span>
-    <span class="text-lg font-semibold">{{ bus.price }}</span>
-    <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-4 py-2 rounded">
+  <div *ngFor="let bus of filteredBuses" class="flex justify-between items-center p-4 border-b bg-white shadow-lg rounded-lg mb-4">
+    <span class="text-lg font-semibold text-gray-700">{{ bus.busNumber }}</span>
+    <span class="text-lg font-semibold text-gray-700">{{ bus.capacity }}</span>
+    <span class="text-lg font-semibold text-gray-700">{{ bus.distance }}</span>
+    <span class="text-lg font-semibold text-gray-700">{{ bus.price }}</span>
+    <button (click)="selectBus(bus)" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition ease-in-out duration-300">
       <a [routerLink]="['/seat-reserve', bus.busId]">View Seats</a>
     </button>
   </div>

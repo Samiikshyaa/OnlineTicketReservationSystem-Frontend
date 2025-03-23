@@ -1,56 +1,90 @@
-<div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Payment Details</h2>
-  
-    <!-- Ticket Details Section -->
-    <div *ngIf="ticket" class="space-y-6">
-      <div class="space-y-2">
-        <p><strong>Reservation ID:</strong> {{ ticket.reserveId }}</p>
-        <p><strong>Seat Count:</strong> {{ ticket.seatCount }}</p>
-        <p><strong>Rate:</strong> Rs{{ ticket.rate }}</p>
-        <p><strong>Total Amount:</strong> Rs{{ ticket.totalAmount }}</p>
-        <p><strong>Bus Number:</strong> {{ ticket.busNumber }}</p>
-        <p><strong>Departure Date:</strong> {{ ticket.departureDate | date }}</p>
-        <p><strong>Departure Time:</strong> {{ ticket.departureTime }}</p>
-        <p><strong>Source:</strong> {{ ticket.source }}</p>
-        <p><strong>Destination:</strong> {{ ticket.destination }}</p>
-        <p><strong>Reservation Date:</strong> {{ ticket.reserveDate | date:'yyyy-MM-dd' }}</p>
-        <p><strong>Reservation Time:</strong> {{ ticket.reserveDate | date:'hh:mm:ss a' }}</p>
-      </div>
-  
-  
-    <!-- Payment Form Section -->
-    <div class="mt-8 p-6 bg-gray-50 rounded-lg shadow-md">
-      <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
-        <div class="space-y-4">
-          <div class="form-group">
-            <label for="transactionId" class="block text-sm font-medium text-gray-700">Transaction ID:</label>
-            <input type="text" id="transactionId" formControlName="transactionId" class="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-            <div *ngIf="paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched" class="text-red-500 text-sm mt-1">
-              Transaction ID is required
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method:</label>
-            <select id="paymentMethod" formControlName="paymentMethod" class="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-              <option value="ESEWA">Esewa</option>
-              <option value="KHALTI">Khalti</option>
-            </select>
-            <div *ngIf="paymentForm.get('paymentMethod')?.invalid && paymentForm.get('paymentMethod')?.touched" class="text-red-500 text-sm mt-1">
-              Payment method is required
-            </div>
-          </div>
-  
-          <button type="submit" 
-          class="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500" 
-          [disabled]="paymentForm.invalid">Submit Payment</button>
-        </div>
-      </form>
-        
-      <button type="submit" 
-      class="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-      (click)="getTicket()">Get Ticket</button>
-    </div>
+<div class="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+  <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Payment Details</h2>
+
+  <!-- Ticket Details Section -->
+  <div *ngIf="ticket" class="bg-gray-100 p-6 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4"> Reservation Information </h3>
+    
+    <div class="grid grid-cols-2 gap-4 text-lg">
+      <p class="font-medium text-gray-700">Reservation ID:</p>
+      <p class="text-gray-900">{{ ticket.reserveId }}</p>
+
+      <p class="font-medium text-gray-700">Bus Number:</p>
+      <p class="text-gray-900">{{ ticket.busNumber }}</p>
+
+      <p class="font-medium text-gray-700">Departure Date:</p>
+      <p class="text-gray-900">{{ ticket.departureDate | date }}</p>
+
+      <p class="font-medium text-gray-700">Departure Time:</p>
+      <p class="text-gray-900">{{ ticket.departureTime }}</p>
+
+      <p class="font-medium text-gray-700">Source:</p>
+      <p class="text-gray-900">{{ ticket.source }}</p>
+
+      <p class="font-medium text-gray-700">Destination:</p>
+      <p class="text-gray-900">{{ ticket.destination }}</p>
+
+      <p class="font-medium text-gray-700">Reservation Date:</p>
+      <p class="text-gray-900">{{ ticket.reserveDate | date:'yyyy-MM-dd' }}</p>
+
+      <p class="font-medium text-gray-700">Reservation Time:</p>
+      <p class="text-gray-900">{{ ticket.reserveDate | date:'hh:mm:ss a' }}</p>
+
+      <p class="font-medium text-gray-700">Seat Count:</p>
+      <p class="text-gray-900">{{ ticket.seatCount }}</p>
+
+      <p class="font-medium text-gray-700">Rate:</p>
+      <p class="text-gray-900">Rs{{ ticket.rate }}</p>
+
+      <p class="font-medium text-gray-700">Total Amount:</p>
+      <p class="text-2xl font-bold text-green-600">Rs{{ ticket.totalAmount }}</p>
     </div>
   </div>
-  
+
+  <!-- Payment Form Section -->
+  <div class="mt-8 p-8 bg-gray-50 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Make a Payment</h3>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+      <div class="space-y-5">
+        <div class="form-group">
+          <label for="transactionId" class="block text-sm font-medium text-gray-700">Transaction ID:</label>
+          <input type="text" id="transactionId" formControlName="transactionId" 
+            class="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" 
+            placeholder="Enter Transaction ID" required>
+          <div *ngIf="paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched" 
+            class="text-red-500 text-sm mt-1">
+            Transaction ID is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method:</label>
+          <select id="paymentMethod" formControlName="paymentMethod" 
+            class="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" 
+            required>
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="ESEWA">Esewa</option>
+            <option value="KHALTI">Khalti</option>
+          </select>
+          <div *ngIf="paymentForm.get('paymentMethod')?.invalid && paymentForm.get('paymentMethod')?.touched" 
+            class="text-red-500 text-sm mt-1">
+            Payment method is required
+          </div>
+        </div>
+
+        <button type="submit" 
+          class="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300" 
+          [disabled]="paymentForm.invalid">
+          Submit Payment
+        </button>
+      </div>
+    </form>
+
+    <button type="button" 
+      class="w-full py-3 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+      (click)="getTicket()">
+      Get Ticket
+    </button>
+  </div>
+</div>
