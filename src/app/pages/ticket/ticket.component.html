@@ -1,27 +1,58 @@
-<div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Ticket Details</h2>
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-300 relative">
   
-    <!-- Ticket Details Section -->
-    <div *ngIf="ticket" class="space-y-6">
-      <div class="space-y-2">
-        <p><strong>Payment Id:</strong> {{ ticket.paymentId }}</p>
-        <p><strong>Payment Method:</strong> {{ ticket.paymentMethod }}</p>
-        <p><strong>Paid Amount:</strong> Rs. {{ ticket.totalAmount }}</p>
-        <p><strong>Paid At:</strong> {{ ticket.paymentDateAndTime | date: 'yyyy-MM-dd  hh:MM a' }}</p>
-        <p><strong>Paid By:</strong> {{ ticket.userName }}</p>
-        <p><strong>Transaction Id:</strong> {{ticket.transactionId}}</p>
-        <p><strong>Reservation Id:</strong> {{ ticket.reservationId }}</p>
-        <p><strong>Departure Date:</strong> {{ ticket.departureDate | date:'yyyy-MM-dd'}}</p>
-        <p><strong>Departure Time:</strong> {{ ticket.departureTime}}</p>
-        <p><strong>From: </strong> {{ ticket.from }}</p>
-        <p><strong>To:</strong> {{ ticket.to }}</p>
-        <p><strong>Seats:</strong> {{ ticket.seatNumbers }}</p>
-      </div>
-    </div>
-  
-    <!-- Payment Confirmation Section -->
-    <!-- <div class="text-center mt-8">
-      <p class="text-lg text-green-600 font-semibold">Payment Status: Successful</p>
-    </div> -->
+  <!-- Ticket Header -->
+  <div class="bg-blue-600 text-white py-4 px-6 text-center">
+    <h2 class="text-2xl font-bold">Bus Ticket</h2>
+    <p class="text-sm">Please take the screenshot!</p>
   </div>
-  
+
+  <!-- Ticket Body -->
+  <div class="p-6">
+    <!-- Payment Information -->
+    <div class="grid grid-cols-2 gap-4 text-lg border-b pb-4">
+      <p class="font-medium text-gray-600">Payment ID:</p>
+      <p class="text-gray-900">{{ ticket.paymentId }}</p>
+
+      <p class="font-medium text-gray-600">Payment Method:</p>
+      <p class="text-gray-900">{{ ticket.paymentMethod }}</p>
+
+      <p class="font-medium text-gray-600">Paid Amount:</p>
+      <p class="text-2xl font-bold text-green-600">Rs. {{ ticket.totalAmount }}</p>
+
+      <p class="font-medium text-gray-600">Paid At:</p>
+      <p class="text-gray-900">{{ ticket.paymentDateAndTime | date: 'yyyy-MM-dd hh:mm a' }}</p>
+    </div>
+
+    <!-- Ticket Details -->
+    <div class="grid grid-cols-2 gap-4 text-lg mt-4">
+      <p class="font-medium text-gray-600">Passenger Name:</p>
+      <p class="text-gray-900">{{ ticket.userName }}</p>
+
+      <p class="font-medium text-gray-600">Transaction ID:</p>
+      <p class="text-gray-900">{{ ticket.transactionId }}</p>
+
+      <p class="font-medium text-gray-600">Reservation ID:</p>
+      <p class="text-gray-900">{{ ticket.reservationId }}</p>
+
+      <p class="font-medium text-gray-600">Departure Date:</p>
+      <p class="text-gray-900">{{ ticket.departureDate | date:'yyyy-MM-dd' }}</p>
+
+      <p class="font-medium text-gray-600">Departure Time:</p>
+      <p class="text-gray-900">{{ ticket.departureTime }}</p>
+
+      <p class="font-medium text-gray-600">From:</p>
+      <p class="text-gray-900">{{ ticket.from }}</p>
+
+      <p class="font-medium text-gray-600">To:</p>
+      <p class="text-gray-900">{{ ticket.to }}</p>
+
+      <p class="font-medium text-gray-600">Seats:</p>
+      <p class="text-gray-900">{{ ticket.seatNumbers }}</p>
+    </div>
+  </div>
+
+  <!-- Ticket Footer -->
+  <div class="bg-gray-100 py-4 px-6 text-center border-t border-dashed border-gray-300">
+    <p class="text-sm text-gray-600">Thank you for choosing our service!</p>
+  </div>
+</div>
