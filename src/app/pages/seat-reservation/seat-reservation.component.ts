@@ -30,17 +30,36 @@ export class SeatReservationComponent implements OnInit {
       }
     });
   }
-
   get chunkedSeats() {
-    const rows = [];
-    for (let i = 0; i < this.seats.length; i += 4) {
-      rows.push({
-        leftSide: this.seats.slice(i, i + 2),
-        rightSide: this.seats.slice(i + 2, i + 4),
-      });
+    const totalSeats = [...this.seats]; // Clone to avoid mutation
+    const rows: any[] = [];
+  
+    // Ensure seats are sorted by their seat ID (or seat number if different field)
+    totalSeats.sort((a, b) => a.id - b.id);
+  
+    // Extract the last 5 seats (S23, S24, S25, S26, S27) for the back row
+    const backRow = totalSeats.splice(totalSeats.length - 5, 5);
+    rows.push({ backRow });
+  
+    // Process the remaining seats
+    const remainingSeats = totalSeats;
+  
+    // Ensure rows are created with no middle aisle
+    if (remainingSeats.length < 4) return rows; // Ensure rows are created if there are enough seats
+  
+    // Group remaining seats into rows, ensuring no seat is placed in the middle
+    for (let i = remainingSeats.length - 1; i >= 0; i -= 4) {
+      const rightSide = remainingSeats.slice(Math.max(i - 1, 0), i + 1); // Right side of the row
+      const leftSide = remainingSeats.slice(Math.max(i - 3, 0), Math.max(i - 1, 0)); // Left side of the row
+  
+      rows.unshift({ leftSide, rightSide }); // Add to front to keep order
     }
+    
+  
     return rows;
   }
+  
+  
   
   fetchBusDetails(busId: string) {
     const token = localStorage.getItem('token');

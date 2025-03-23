@@ -17,43 +17,60 @@
       <span class="ml-2 text-gray-800">Reserved</span>
     </div>
   </div>
-  <!-- Bus Layout -->
-  <div class="grid gap-4 p-4 bg-white shadow-md rounded-lg">
-<div *ngFor="let row of chunkedSeats; let rowIndex = index" class="flex gap-6">
-  <!-- Left Side Seats -->
-  <div class="grid grid-cols-2 gap-4">
-    <button 
-      *ngFor="let seat of row.leftSide" 
-      class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
-      [ngClass]="{
-        'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
-        'bg-green-500 text-white': selectedSeats.includes(seat.id),
-        'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
-      }"
-      (click)="toggleSeatSelection(seat)">
-      {{ seat.seatNumber }}
-    </button>
+  <div *ngFor="let row of chunkedSeats; let rowIndex = index" class="flex gap-6 items-center justify-center">
+    <!-- Back Row -->
+    <ng-container *ngIf="row.backRow">
+      <div class="grid grid-cols-5 gap-4">
+        <button 
+          *ngFor="let seat of row.backRow"
+          class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
+          [ngClass]="{
+            'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
+            'bg-green-500 text-white': selectedSeats.includes(seat.id),
+            'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
+          }"
+          (click)="toggleSeatSelection(seat)">
+          {{ seat.seatNumber }}
+        </button>
+      </div>
+    </ng-container>
+  
+    <!-- Regular Rows -->
+    <ng-container *ngIf="!row.backRow">
+      <!-- Left Side Seats -->
+      <div class="grid grid-cols-2 gap-4">
+        <button 
+          *ngFor="let seat of row.leftSide" 
+          class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
+          [ngClass]="{
+            'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
+            'bg-green-500 text-white': selectedSeats.includes(seat.id),
+            'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
+          }"
+          (click)="toggleSeatSelection(seat)">
+          {{ seat.seatNumber }}
+        </button>
+      </div>
+  
+      <!-- Aisle Space -->
+      <div class="w-10"></div>
+  
+      <!-- Right Side Seats -->
+      <div class="grid grid-cols-2 gap-4">
+        <button 
+          *ngFor="let seat of row.rightSide" 
+          class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
+          [ngClass]="{
+            'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
+            'bg-green-500 text-white': selectedSeats.includes(seat.id),
+            'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
+          }"
+          (click)="toggleSeatSelection(seat)">
+          {{ seat.seatNumber }}
+        </button>
+      </div>
+    </ng-container>
   </div>
-
-  <!-- Aisle Space (except last row) -->
-  <div *ngIf="rowIndex !== chunkedSeats.length - 1" class="w-10"></div>
-
-  <!-- Right Side Seats -->
-  <div class="grid grid-cols-2 gap-4">
-    <button 
-      *ngFor="let seat of row.rightSide" 
-      class="w-14 h-14 text-center text-lg font-bold rounded-lg border transition-all duration-300"
-      [ngClass]="{
-        'bg-red-500 text-black-600 cursor-not-allowed': seat.seatStatus === 'RESERVED',
-        'bg-green-500 text-white': selectedSeats.includes(seat.id),
-        'bg-gray-200 hover:bg-gray-300': seat.seatStatus !== 'RESERVED' && !selectedSeats.includes(seat.id)
-      }"
-      (click)="toggleSeatSelection(seat)">
-      {{ seat.seatNumber }}
-    </button>
-  </div>
-</div>
-
 
   <!-- Reserve Button -->
   <button class="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold text-lg rounded-lg shadow-md hover:bg-blue-600 transition-all"
