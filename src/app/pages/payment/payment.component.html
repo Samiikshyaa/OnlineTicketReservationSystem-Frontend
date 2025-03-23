@@ -48,15 +48,23 @@
     <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
       <div class="space-y-5">
         <div class="form-group">
-          <label for="transactionId" class="block text-sm font-medium text-gray-700">Transaction ID:</label>
-          <input type="text" id="transactionId" formControlName="transactionId" 
+          <label for="transactionId" class="block text-sm font-medium text-gray-700">
+            Transaction ID:
+          </label>
+          <input 
+            type="text" 
+            id="transactionId" 
+            formControlName="transactionId" 
             class="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" 
-            placeholder="Enter Transaction ID" required>
-          <div *ngIf="paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched" 
-            class="text-red-500 text-sm mt-1">
-            Transaction ID is required
+            required>
+          
+          <div *ngIf="paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched" class="text-red-500 text-sm mt-1">
+            <p *ngIf="paymentForm.get('transactionId')?.errors?.['required']">Transaction ID is required.</p>
+            <p *ngIf="paymentForm.get('transactionId')?.errors?.['minlength']">Transaction ID must be at least 6 characters.</p>
+            <p *ngIf="paymentForm.get('transactionId')?.errors?.['pattern']">Transaction ID can only contain letters and numbers.</p>
           </div>
         </div>
+        
 
         <div class="form-group">
           <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method:</label>

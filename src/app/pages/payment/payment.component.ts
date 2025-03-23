@@ -24,9 +24,10 @@ export class PaymentComponent implements OnInit {
   ) {
     // Initialize the payment form with form controls
     this.paymentForm = this.fb.group({
-      transactionId: ['', Validators.required],
+      transactionId: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]+$')]],
       paymentMethod: ['', Validators.required]
     });
+    
   }
 
   ngOnInit(): void {
@@ -78,7 +79,6 @@ export class PaymentComponent implements OnInit {
       'http://localhost:8080/api/payment/save', paymentRequest, { headers }
     ).subscribe(
       (response) => {
-        debugger;
         console.log("Payment Successful:", response)
         alert("Payment Successful")
         if(response.data && response.data.paymentId){
