@@ -9,6 +9,7 @@ import { RouteComponent } from './pages/route/route.component';
 import { SeatReservationComponent } from './pages/seat-reservation/seat-reservation.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
+import { UserHistoryComponent } from './pages/user-history/user-history.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'seat-reserve/:busId', component: SeatReservationComponent, canActivate: [authGuardGuard] },
   {path:'payment/:reservationId', component:PaymentComponent, canActivate:[authGuardGuard]},
   {path:'ticket/:paymentId', component:TicketComponent, canActivate:[authGuardGuard]},
+  {path:'ticketHistory', component:UserHistoryComponent, canActivate:[authGuardGuard]},
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

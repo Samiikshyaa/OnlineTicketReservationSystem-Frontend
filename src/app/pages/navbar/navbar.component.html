@@ -7,6 +7,9 @@
       <li *ngIf="role === 'ROLE_PASSENGER'">
         <a routerLink="/bus-route" class="hover:text-gray-200 transition">Home</a>
       </li>
+      <li *ngIf="role === 'ROLE_PASSENGER'">
+        <a routerLink="/ticketHistory" class="hover:text-gray-200 transition">History</a>
+      </li>
       <li *ngIf="role === 'ROLE_ADMIN'">
         <a routerLink="/route" class="hover:text-gray-200 transition">Route</a>
       </li>
