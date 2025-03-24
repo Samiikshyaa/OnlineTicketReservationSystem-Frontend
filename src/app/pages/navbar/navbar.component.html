@@ -1,5 +1,13 @@
 <nav class="bg-blue-600 p-4 shadow-lg">
   <div class="container mx-auto flex justify-between items-center">
+    
+    <!-- Logo and System Name -->
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Logo" class="h-15 w-20" />
+      <span class="text-white text-lg font-bold">Online Ticket Reservation System</span>
+    </div>
+
+    <!-- Navigation Links -->
     <ul class="flex space-x-6 text-white font-semibold">
       <li *ngIf="role === 'ROLE_ADMIN'">
         <a routerLink="/dashboard" class="hover:text-gray-200 transition">Dashboard</a>
@@ -21,6 +29,7 @@
       </li>
     </ul>
 
+    <!-- Logout Button -->
     <button (click)="logout()" class="bg-red-500 px-4 py-2 rounded-lg text-white hover:bg-red-600 transition">
       Logout
     </button>
